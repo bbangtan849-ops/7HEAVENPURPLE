@@ -3,63 +3,122 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>7HEAVENPURPLE Image Generator</title>
+    <title>7HEAVENPURPLE - Voting Proof Generator</title>
     <link rel="stylesheet" href="style.css">
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
+    <div class="page-background" id="pageBg">
+        <!-- Dekorasi Stiker Latar -->
+        <div class="bg-sticker star-1">⭐</div>
+        <div class="bg-sticker star-2">✨</div>
+        <div class="bg-sticker star-3">⭐</div>
+        <div class="bg-sticker star-4">✨</div>
+    </div>
+
     <div class="container">
         <!-- Header -->
         <header class="header-card">
-            <h1>7HEAVENPURPLE</h1>
-            <p>Buat bukti voting atau editanmu jadi lebih keren!</p>
+            <h1 class="main-title">PU-NI</h1>
+            <p class="sub-title">INSIDE YOUR POCKET, ENCHIN</p>
         </header>
 
         <!-- Step 1: Username -->
         <section class="card">
-            <h2><span class="step-num">1</span> Your username</h2>
-            <p class="desc">Akan menjadi watermark pada gambar.</p>
-            <input type="text" id="usernameInput" placeholder="@yourusername">
+            <h2><span class="step-num">1</span> Your Username</h2>
+            <p class="desc">Masukkan username atau akun voting Anda.</p>
+            <input type="text" id="usernameInput" placeholder="@username_anda">
         </section>
 
         <!-- Step 2: Pilih Karakter / Stiker -->
         <section class="card">
-            <h2><span class="step-num">2</span> Pick your Character</h2>
-            <p class="desc">Ketuk salah satu karakter di bawah ini.</p>
+            <h2><span class="step-num">2</span> Pilih Karakter / Stiker</h2>
+            <p class="desc">Ketuk salah satu karakter atau stiker favorit Anda:</p>
+            
             <div class="character-grid">
-                <div class="char-option active" data-char="char1.png">
-                    <div class="char-box">⭐</div>
-                    <span>Character 1</span>
+                <div class="char-option active" data-char="char1.png" data-name="Member Biru">
+                    <div class="char-box">💙</div>
+                    <span>Member 1</span>
                 </div>
-                <div class="char-option" data-char="char2.png">
-                    <div class="char-box">🌙</div>
-                    <span>Character 2</span>
+                <div class="char-option" data-char="char2.png" data-name="Member Ungu">
+                    <div class="char-box">💜</div>
+                    <span>Member 2</span>
+                </div>
+                <div class="char-option" data-char="char3.png" data-name="Member Kuning">
+                    <div class="char-box">💛</div>
+                    <span>Member 3</span>
+                </div>
+                <div class="char-option" data-char="char4.png" data-name="Member Merah">
+                    <div class="char-box">❤️</div>
+                    <span>Member 4</span>
+                </div>
+                <div class="char-option" data-char="char5.png" data-name="BT21 Cooky">
+                    <div class="char-box">🐰</div>
+                    <span>Cooky</span>
+                </div>
+                <div class="char-option" data-char="char6.png" data-name="BT21 Chimmy">
+                    <div class="char-box">🐶</div>
+                    <span>Chimmy</span>
+                </div>
+                <div class="char-option" data-char="char7.png" data-name="BT21 Tata">
+                    <div class="char-box">❤️</div>
+                    <span>Tata</span>
+                </div>
+                <div class="char-option" data-char="char8.png" data-name="BT21 Shooky">
+                    <div class="char-box">🍪</div>
+                    <span>Shooky</span>
                 </div>
             </div>
         </section>
 
-        <!-- Step 3: Upload Screenshot -->
+        <!-- Step 3: Pilih Tema Latar Belakang -->
         <section class="card">
-            <h2><span class="step-num">3</span> Add your voting proof</h2>
-            <p class="desc">Gunakan screenshot bukti atau foto Anda.</p>
+            <h2><span class="step-num">3</span> Pilih Tema Latar</h2>
+            <p class="desc">Pilih warna latar belakang favoritmu:</p>
+            
+            <div class="bg-grid">
+                <div class="bg-option active" data-bg="orange" style="background: linear-gradient(135deg, #ff9100, #e65100);">
+                    <span>Oranye</span>
+                </div>
+                <div class="bg-option" data-bg="purple" style="background: linear-gradient(135deg, #ab47bc, #4a148c);">
+                    <span>Ungu</span>
+                </div>
+                <div class="bg-option" data-bg="pink" style="background: linear-gradient(135deg, #ec407a, #880e4f);">
+                    <span>Pink</span>
+                </div>
+                <div class="bg-option" data-bg="blue" style="background: linear-gradient(135deg, #29b6f6, #01579b);">
+                    <span>Biru</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Step 4: Upload Screenshot -->
+        <section class="card">
+            <h2><span class="step-num">4</span> Add Your Voting Proof</h2>
+            <p class="desc">Unggah screenshot bukti voting atau foto Anda.</p>
             <label for="imageUpload" class="upload-box" id="uploadLabel">
-                <span>📁 Ketuk untuk memilih screenshot atau drop di sini</span>
+                <span>📸 Ketuk untuk memilih screenshot atau drop di sini</span>
             </label>
             <input type="file" id="imageUpload" accept="image/*" style="display: none;">
         </section>
 
-        <!-- Step 4: Preview & Download -->
+        <!-- Step 5: Preview & Download -->
         <section class="card">
-            <h2><span class="step-num">4</span> Your overlay</h2>
+            <h2><span class="step-num">5</span> Your Overlay</h2>
             <p class="desc">Hasil akhir editan Anda akan muncul di sini.</p>
             <div class="preview-container">
-                <canvas id="resultCanvas" style="display: none; max-width: 100%; border-radius: 12px;"></canvas>
-                <div id="placeholderText" class="placeholder-text">Menunggu screenshot Anda...</div>
+                <canvas id="resultCanvas" style="display: none; max-width: 100%; border-radius: 16px;"></canvas>
+                <div id="placeholderText" class="placeholder-text">Menunggu screenshot atau foto diunggah...</div>
             </div>
-            <button id="downloadBtn" class="download-btn" disabled>Download my image</button>
+            <button id="downloadBtn" class="download-btn" disabled>Download My Image</button>
         </section>
-        
+
+        <!-- Footer Banner / Tag -->
+        <div class="footer-badge">
+            <span>I VOTE FOR #ENHYPEN ON #2026MAMAVOTE</span>
+        </div>
+
         <footer>
             <p>made with 💜 for 7HEAVENPURPLE</p>
         </footer>
