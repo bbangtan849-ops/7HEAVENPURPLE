@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>7HEAVENPURPLE Image Generator</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header-card">
+            <h1>7HEAVENPURPLE</h1>
+            <p>Buat bukti voting atau editanmu jadi lebih keren!</p>
+        </header>
+
+        <!-- Step 1: Username -->
+        <section class="card">
+            <h2><span class="step-num">1</span> Your username</h2>
+            <p class="desc">Akan menjadi watermark pada gambar.</p>
+            <input type="text" id="usernameInput" placeholder="@yourusername">
+        </section>
+
+        <!-- Step 2: Pilih Karakter / Stiker -->
+        <section class="card">
+            <h2><span class="step-num">2</span> Pick your Character</h2>
+            <p class="desc">Ketuk salah satu karakter di bawah ini.</p>
+            <div class="character-grid">
+                <div class="char-option active" data-char="char1.png">
+                    <div class="char-box">⭐</div>
+                    <span>Character 1</span>
+                </div>
+                <div class="char-option" data-char="char2.png">
+                    <div class="char-box">🌙</div>
+                    <span>Character 2</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Step 3: Upload Screenshot -->
+        <section class="card">
+            <h2><span class="step-num">3</span> Add your voting proof</h2>
+            <p class="desc">Gunakan screenshot bukti atau foto Anda.</p>
+            <label for="imageUpload" class="upload-box" id="uploadLabel">
+                <span>📁 Ketuk untuk memilih screenshot atau drop di sini</span>
+            </label>
+            <input type="file" id="imageUpload" accept="image/*" style="display: none;">
+        </section>
+
+        <!-- Step 4: Preview & Download -->
+        <section class="card">
+            <h2><span class="step-num">4</span> Your overlay</h2>
+            <p class="desc">Hasil akhir editan Anda akan muncul di sini.</p>
+            <div class="preview-container">
+                <canvas id="resultCanvas" style="display: none; max-width: 100%; border-radius: 12px;"></canvas>
+                <div id="placeholderText" class="placeholder-text">Menunggu screenshot Anda...</div>
+            </div>
+            <button id="downloadBtn" class="download-btn" disabled>Download my image</button>
+        </section>
+        
+        <footer>
+            <p>made with 💜 for 7HEAVENPURPLE</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
