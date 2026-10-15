@@ -1,187 +1,135 @@
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    font-family: 'Poppins', sans-serif;
-}
+const usernameInput = document.getElementById('usernameInput');
+const imageUpload = document.getElementById('imageUpload');
+const resultCanvas = document.getElementById('resultCanvas');
+const placeholderText = document.getElementById('placeholderText');
+const downloadBtn = document.getElementById('downloadBtn');
+const charOptions = document.querySelectorAll('.char-option');
+const bgOptions = document.querySelectorAll('.bg-option');
 
-body {
-    background-color: #0b0f19;
-    color: #ffffff;
-    padding: 20px;
-    display: flex;
-    justify-content: center;
-}
+let selectedCharName = "Member Biru";
+let selectedBgTheme = "orange";
+let uploadedImage = null;
 
-.container {
-    width: 100%;
-    max-width: 480px;
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-}
+// Konfigurasi warna latar canvas berdasarkan pilihan
+const bgThemes = {
+    orange: { start: '#ff9100', end: '#e65100', bodyBg: 'linear-gradient(135deg, #ff9100 0%, #ff6d00 100%)' },
+    purple: { start: '#ab47bc', end: '#4a148c', bodyBg: 'linear-gradient(135deg, #ab47bc 0%, #4a148c 100%)' },
+    pink: { start: '#ec407a', end: '#880e4f', bodyBg: 'linear-gradient(135deg, #ec407a 0%, #880e4f 100%)' },
+    blue: { start: '#29b6f6', end: '#01579b', bodyBg: 'linear-gradient(135deg, #29b6f6 0%, #01579b 100%)' }
+};
 
-.header-card {
-    background: linear-gradient(135deg, #3b1443, #1a0b2e);
-    padding: 24px;
-    border-radius: 20px;
-    text-align: center;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-}
+// Pilihan Karakter
+charOptions.forEach(option => {
+    option.addEventListener('click', () => {
+        charOptions.forEach(opt => opt.classList.remove('active'));
+        option.classList.add('active');
+        selectedCharName = option.getAttribute('data-name');
+        if (uploadedImage) {
+            generateCanvas();
+        }
+    });
+});
 
-.header-card h1 {
-    font-size: 24px;
-    color: #d8b4fe;
-    margin-bottom: 8px;
-}
+// Pilihan Tema Latar
+bgOptions.forEach(option => {
+    option.addEventListener('click', () => {
+        bgOptions.forEach(opt => opt.classList.remove('active'));
+        option.classList.add('active');
+        selectedBgTheme = option.getAttribute('data-bg');
+        
+        // Ubah warna latar halaman web secara langsung
+        document.body.style.background = bgThemes[selectedBgTheme].bodyBg;
 
-.header-card p {
-    font-size: 13px;
-    color: #cbd5e1;
-}
+        if (uploadedImage) {
+            generateCanvas();
+        }
+    });
+});
 
-.card {
-    background-color: #161f33;
-    border-radius: 16px;
-    padding: 20px;
-    border: 1px solid #1e293b;
-}
+// Event saat upload gambar
+imageUpload.addEventListener('change', (e) => {
+    const file = e.target.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(event) {
+            const img = new Image();
+            img.onload = function() {
+                uploadedImage = img;
+                placeholderText.style.display = 'none';
+                resultCanvas.style.display = 'block';
+                downloadBtn.disabled = false;
+                generateCanvas();
+            }
+            img.src = event.target.result;
+        }
+        reader.readAsDataURL(file);
+    }
+});
 
-.card h2 {
-    font-size: 16px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 4px;
-}
+// Fungsi Membuat Gambar Overlay (Canvas)
+function generateCanvas() {
+    if (!uploadedImage) return;
 
-.step-num {
-    background-color: #7c3aed;
-    color: white;
-    width: 24px;
-    height: 24px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    font-size: 12px;
-}
+    const canvas = resultCanvas;
+    const ctx = canvas.getContext('2d');
 
-.desc {
-    font-size: 12px;
-    color: #94a3b8;
-    margin-bottom: 14px;
-}
+    canvas.width = 800;
+    canvas.height = 1000;
 
-input[type="text"] {
-    width: 100%;
-    padding: 12px 16px;
-    background-color: #0f172a;
-    border: 1px solid #334155;
-    border-radius: 10px;
-    color: white;
-    font-size: 14px;
-    outline: none;
-}
+    const theme = bgThemes[selectedBgTheme];
 
-input[type="text"]:focus {
-    border-color: #a855f7;
-}
+    // 1. Background Latar sesuai pilihan tema
+    const grad = ctx.createLinearGradient(0, 0, 0, canvas.height);
+    grad.addColorStop(0, theme.start);
+    grad.addColorStop(1, theme.end);
+    ctx.fillStyle = grad;
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-.character-grid {
-    display: flex;
-    gap: 10px;
-}
+    // Hiasan Bintang Latar
+    ctx.fillStyle = '#ffffff';
+    ctx.font = 'bold 40px Poppins';
+    ctx.fillText('⭐', 50, 80);
+    ctx.fillText('✨', 700, 120);
+    ctx.fillText('⭐', 70, 920);
+    ctx.fillText('✨', 720, 880);
 
-.char-option {
-    background-color: #1e293b;
-    border: 2px solid transparent;
-    border-radius: 12px;
-    padding: 10px;
-    text-align: center;
-    cursor: pointer;
-    flex: 1;
-    transition: 0.2s;
-}
+    // Judul Atas
+    ctx.fillStyle = '#ffeb3b';
+    ctx.font = 'bold 60px Poppins';
+    ctx.textAlign = 'center';
+    ctx.fillText('PU-NI', canvas.width / 2, 85);
+    
+    ctx.fillStyle = '#ffffff';
+    ctx.font = 'bold 16px Poppins';
+    ctx.fillText('INSIDE YOUR POCKET, ENCHIN', canvas.width / 2, 115);
 
-.char-option.active {
-    border-color: #a855f7;
-    background-color: #2e1065;
-}
+    // 2. Kotak Kartu Putih Utama di Tengah
+    const cardX = 60;
+    const cardY = 140;
+    const cardWidth = 680;
+    const cardHeight = 740;
+    const radius = 24;
 
-.char-box {
-    font-size: 24px;
-    margin-bottom: 4px;
-}
+    ctx.save();
+    ctx.beginPath();
+    ctx.roundRect(cardX, cardY, cardWidth, cardHeight, radius);
+    ctx.fillStyle = '#ffffff';
+    ctx.shadowColor = 'rgba(0, 0, 0, 0.2)';
+    ctx.shadowBlur = 20;
+    ctx.shadowOffsetY = 10;
+    ctx.fill();
+    ctx.restore();
 
-.char-option span {
-    font-size: 11px;
-    color: #cbd5e1;
-}
+    // Gambar Screenshot Pengguna
+    const imgX = cardX + 40;
+    const imgY = cardY + 40;
+    const imgWidth = 600;
+    const imgHeight = 450;
 
-.upload-box {
-    border: 2px dashed #475569;
-    border-radius: 12px;
-    padding: 30px 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    cursor: pointer;
-    color: #94a3b8;
-    font-size: 13px;
-    transition: 0.2s;
-}
-
-.upload-box:hover {
-    border-color: #a855f7;
-    color: #ffffff;
-}
-
-.preview-container {
-    background-color: #0f172a;
-    border-radius: 12px;
-    min-height: 200px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    padding: 10px;
-    overflow: hidden;
-}
-
-.placeholder-text {
-    color: #64748b;
-    font-size: 13px;
-}
-
-.download-btn {
-    width: 100%;
-    margin-top: 12px;
-    padding: 14px;
-    background-color: #7c3aed;
-    color: white;
-    border: none;
-    border-radius: 12px;
-    font-weight: 600;
-    font-size: 14px;
-    cursor: pointer;
-    transition: 0.2s;
-}
-
-.download-btn:disabled {
-    background-color: #334155;
-    color: #64748b;
-    cursor: not-allowed;
-}
-
-.download-btn:not(:disabled):hover {
-    background-color: #6d28d9;
-}
-
-footer {
-    text-align: center;
-    font-size: 11px;
-    color: #64748b;
-    margin-top: 10px;
-}
+    ctx.save();
+    ctx.beginPath();
+    ctx.roundRect(imgX, imgY, imgWidth, imgHeight, 16);
+    ctx.clip();
+    
+    const hRatio = imgWidth / uploadedImage.width;
+    const vRatio = imgHeight
